@@ -92,88 +92,88 @@ export const useAuthSignUp = () => {
 
     const onGenerateCode = async (email: string, password: string) => {
         if (!isLoaded)
-          return toast("Error", {
-            description: "Oops! something went wrong",
-          })
-        
+            return toast("Error", {
+                description: "Oops! something went wrong",
+            })
+
         try {
             if (email && password) {
-              await signUp.create({
-                emailAddress: getValues("email"),
-                password: getValues("password"),
-              })
-      
-              await signUp.prepareEmailAddressVerification({
-                strategy: "email_code",
-              })
-      
-              setVerifying(true)
+                await signUp.create({
+                    emailAddress: getValues("email"),
+                    password: getValues("password"),
+                })
+
+                await signUp.prepareEmailAddressVerification({
+                    strategy: "email_code",
+                })
+
+                setVerifying(true)
             } else {
-              return toast("Error", {
-                description: "No fields must be empty",
-              })
+                return toast("Error", {
+                    description: "No fields must be empty",
+                })
             }
-          } catch (error) {
+        } catch (error) {
             console.error(JSON.stringify(error, null, 2))
         }
     }
 
     const onInitiateUserRegistration = handleSubmit(async (values) => {
         if (!isLoaded)
-          return toast("Error", {
-            description: "Oops! something went wrong",
-          })
-    
+            return toast("Error", {
+                description: "Oops! something went wrong",
+            })
+
         try {
             setCreating(true)
-            const completeSignUp = await signUp.attemptEmailAddressVerification({
-              code,
-            })
+            const completeSignUp = await signUp.attemptEmailAddressVerification(
+                {
+                    code,
+                },
+            )
 
             if (completeSignUp.status !== "complete") {
                 return toast("Error", {
-                  description: "Oops! something went wrong, status in complete",
+                    description:
+                        "Oops! something went wrong, status in complete",
                 })
             }
 
             if (completeSignUp.status === "complete") {
                 if (!signUp.createdUserId) return
                 const user = await onSignUpUser({
-                  firstname: values.firstname,
-                  lastname: values.lastname,
-                  clerkId: signUp.createdUserId,
-                  image: "",
+                    firstname: values.firstname,
+                    lastname: values.lastname,
+                    clerkId: signUp.createdUserId,
+                    image: "",
                 })
 
                 reset()
 
                 if (user.status === 200) {
                     toast("Success", {
-                      description: user.message,
+                        description: user.message,
                     })
                     await setActive({
-                      session: completeSignUp.createdSessionId,
+                        session: completeSignUp.createdSessionId,
                     })
                     router.push(`/group/create`)
                 }
 
                 if (user.status !== 200) {
                     toast("Error", {
-                      description: user.message + "action failed",
+                        description: user.message + "action failed",
                     })
                     router.refresh
                 }
                 setCreating(false)
                 setVerifying(false)
-
             } else {
                 console.error(JSON.stringify(completeSignUp, null, 2))
             }
-
         } catch (error) {
             console.error(JSON.stringify(error, null, 2))
         }
-        
     })
 
     return {
@@ -187,5 +187,4 @@ export const useAuthSignUp = () => {
         setCode,
         getValues,
     }
-
 }
