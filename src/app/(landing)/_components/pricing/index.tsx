@@ -5,7 +5,6 @@ import { Card, CardDescription, CardTitle } from "@/components/ui/card"
 import { Check } from "@/icons"
 import Link from "next/link"
 
-
 type Props = {}
 
 export const PricingSection = (props: Props) => {
@@ -22,8 +21,8 @@ export const PricingSection = (props: Props) => {
                     Pricing Plans That Fit Your Right
                 </GradientText>
                 <p className="text-sm md:text-center text-left text-muted-foreground">
-                    Grouple is a vibrant online community platform that empowers people to
-                    connect, <br className="hidden md:block" />
+                    Grouple is a vibrant online community platform that empowers
+                    people to connect, <br className="hidden md:block" />
                     collaborate, and cultivate meaningful relationships
                 </p>
             </BackdropGradient>

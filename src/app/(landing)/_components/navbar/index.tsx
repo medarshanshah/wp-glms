@@ -25,11 +25,14 @@ const LandingPageNavbar = (props: Props) => {
                 <GlassSheet
                     triggerClass="lg:hidden"
                     trigger={
-                        <Button variant="ghost" className="hover:bg-transparent">
-                        <MenuIcon size={30} />
+                        <Button
+                            variant="ghost"
+                            className="hover:bg-transparent"
+                        >
+                            <MenuIcon size={30} />
                         </Button>
                     }
-                    >
+                >
                     <Menu orientation="mobile" />
                 </GlassSheet>
             </div>
